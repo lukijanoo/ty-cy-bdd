@@ -1,4 +1,4 @@
-import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor"
+import { Given, When, Then, DataTable } from "@badeball/cypress-cucumber-preprocessor"
 import { parseAlertMessage } from '../../support/utils';
 
 let msg, accountNumberId;
@@ -120,4 +120,10 @@ When(/^I search for the "([^"]*)"$/, (first) => {
         cy.typeAText(sel.searchField, `${first}`)
     })
 
+});
+
+Then(/^I should see the following buttons$/, (datatable: DataTable) => {
+    datatable.hashes().forEach(row => {
+        cy.contains(row.buttonName).should("exist").should("contain", row.buttonName)
+    })
 });
